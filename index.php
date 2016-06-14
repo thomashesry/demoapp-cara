@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <title>Demo App</title>
+    <title>Demo App CA RA</title>
   </head>
   <body>
 
@@ -15,7 +15,7 @@
     ?>
 
     <div class="container">
-      <h1><strong>DEMO APP FOR CA RELEASE AUTOMATION</strong></h1>
+      <h1><strong>THE WAREHOUSE</strong></h1>
     </div>
     <br>
     <div class="container">
@@ -30,30 +30,13 @@
             }
             echo "<span class='text-success'>Connected successfully</span><br>";
 
-            //DB create
-            $db_create = "CREATE DATABASE IF NOT EXISTS demoapp_db";
-            if(mysqli_query($conn, $db_create)){
-                echo "<span class='text-success'>Database created</span><br>";
-            } else {
-                echo "<span class='text-warning'>Database already exists</span>";
-            }
             mysqli_select_db($conn, 'demoapp_db');
 
-            //Table create
-            $table_create = "CREATE TABLE IF NOT EXISTS demoapp (
-                    id INT(6) AUTO_INCREMENT PRIMARY KEY,
-                    content VARCHAR(30) NOT NULL
-                    )";
-            if ($conn->query($table_create) === TRUE) {
-                echo "<span class='text-success'>Table <i>demoapp</i> created successfully</span><br>";
-            } else {
-                echo "<span class='text-warning'>Error creating table: </span>" . $conn->error;
-            }
-
             //Table insert
-            $content = mysqli_real_escape_string($conn, $_POST['content']);
-            if (!empty($content)) {
-              $insert_form = "INSERT INTO demoapp (content) VALUES('$content')";
+            $product_name = mysqli_real_escape_string($conn, $_POST['product_name']);
+            $product_price = mysqli_real_escape_string($conn, $_POST['product_price']);
+            if (!empty($product_name) && !empty($product_price)) {
+              $insert_form = "INSERT INTO warehouse (product_name, product_price) VALUES('$product_name', '$product_price')";
               if ($conn->query($insert_form) === TRUE) {
                 echo "<span class='text-success'>Row inserted successfully</span>";
               }else {
@@ -68,23 +51,25 @@
     <div class="container">
       <form action="" method="post">
           <div class="form-group">
-            <label for="content">Type something to insert in the DB : </label>
-            <input type="text" class="form-control" name="content" value="">
+            <label for="product_name">Nom du produit : </label>
+            <input type="text" class="form-control" name="product_name" value=""><br>
+            <label for="product_price">Prix du produit : </label>
+            <input type="text" class="form-control" name="product_price" value="">
           </div>
           <input type="submit" class="btn btn-primary" name="submit" value="Envoyer">
       </form>
     </div>
     <br><br>
     <div class="container">
-      <h2>DB entries</h2>
+      <h2>Warehouse</h2>
       <p>
         <table class="table">
           <?php
-              $display_table = "SELECT * FROM demoapp";
+              $display_table = "SELECT * FROM warehouse";
               $result = $conn->query($display_table);
               if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
-                  echo "<tr><td>".$row['id']."<td><td>".$row['content']."<td></tr>";
+                  echo "<tr><td>".$row['id']."</td><td>".$row['product_name']."</td><td>".$row['product_price']."</td></tr>";
                 }
               }
               else {
