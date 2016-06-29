@@ -63,9 +63,9 @@
       <p>
         <table class="table">
           <tr>
-            <th>Identifiant</th>
-            <th>Nom du produit</th>
-            <th>Prix du produit</th>
+            <th>ID</th>
+            <th>Product name</th>
+            <th>Product price</th>
         </tr>
           <?php
               $display_table = "SELECT * FROM warehouse";
