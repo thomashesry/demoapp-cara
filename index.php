@@ -9,9 +9,7 @@
   <body>
 
     <?php
-        $servername = "localhost";
-        $username = "root";
-        $password = "1234";
+        include("credentials.php");
     ?>
 
     <div class="container">
@@ -51,12 +49,12 @@
     <div class="container">
       <form action="" method="post">
           <div class="form-group">
-            <label for="product_name">Nom du produit : </label>
+            <label for="product_name">Product name : </label>
             <input type="text" class="form-control" name="product_name" value=""><br>
-            <label for="product_price">Prix du produit : </label>
+            <label for="product_price">Product price : </label>
             <input type="text" class="form-control" name="product_price" value="">
           </div>
-          <input type="submit" class="btn btn-primary" name="submit" value="Envoyer">
+          <input type="submit" class="btn btn-primary" name="submit" value="Submit">
       </form>
     </div>
     <br><br>
@@ -64,6 +62,11 @@
       <h2>Warehouse</h2>
       <p>
         <table class="table">
+          <tr>
+            <th>Identifiant</th>
+            <th>Nom du produit</th>
+            <th>Prix du produit</th>
+        </tr>
           <?php
               $display_table = "SELECT * FROM warehouse";
               $result = $conn->query($display_table);
